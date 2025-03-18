@@ -1,6 +1,7 @@
 {
   "type": "module",
   "dependencies": {
+    "exceljs": "^4.4.0",
     "mongodb": "^6.14.2"
   }
 }
