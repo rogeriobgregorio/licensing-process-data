@@ -53,16 +53,21 @@ async function fetchProcesses(db) {
       .toArray();
 
     return processes.map((process) => {
-      let lastDestination = "Unknown";
+      let lastDestination = "Destino não encontrado";
 
       if (process.timeline && process.timeline.length > 0) {
         const lastEvent = process.timeline[process.timeline.length - 1];
 
-        if (lastEvent.to?.userId) {
-          lastDestination = lastEvent.to.userId;
-        } else if (lastEvent.from?.userId) {
-          lastDestination = lastEvent.from.userId;
-        }
+        // Se houver destino, usa 'to'; senão, usa 'from' como fallback
+        const destinationId =
+          lastEvent.to?.userId ||
+          lastEvent.to?.tag ||
+          lastEvent.from?.userId ||
+          lastEvent.from?.tag;
+
+        if (destinationId) {
+          lastDestination = destinationId;
+        } 
       }
 
       return {
@@ -72,6 +77,7 @@ async function fetchProcesses(db) {
         lastDestination,
       };
     });
+
   } catch (error) {
     console.error("Erro ao buscar processos no banco de dados:", error);
     throw new Error("Não foi possível buscar os processos.");
@@ -125,6 +131,7 @@ async function saveAsExcel(db) {
 
     await wb.xlsx.writeFile("listaProcessos2.xlsx");
     console.log("Arquivo listaProcessos2.xlsx salvo com sucesso!");
+
   } catch (error) {
     console.error("Erro ao tentar salvar o arquivo Excel:", error);
   }
