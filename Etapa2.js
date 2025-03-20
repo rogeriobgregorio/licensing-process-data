@@ -1,37 +1,6 @@
-// Importa o módulo MongoClient do pacote 'mongodb' e o objeto ObjectId
-import { MongoClient } from 'mongodb';
-import { ObjectId } from 'mongodb';
-
-// Define a URL de conexão com o MongoDB e o nome do banco de dados
-let MONGODB_URL = 'mongodb+srv://testeAprova:teste123@cluster0.u2gxf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
-let MONGO_DB = 'TesteJs';
-
-// Cria uma nova instância do cliente MongoDB
-const DBClient = new MongoClient(MONGODB_URL);
-
-// Seleciona o banco de dados
-const DB = DBClient.db(MONGO_DB);
-
-//Responda aqui a Etapa 2 do Exercício
-
-import fs from "fs";
-import ExcelJS from "exceljs";
-
-// Função para conectar ao MongoDB, executar uma ação e fechar a conexão
-async function withMongoDB(action) {
-  try {
-    await DBClient.connect();
-    console.log("Conexão com o MongoDB bem-sucedida!");
-    await action(DB);
-
-  } catch (erro) {
-    console.error("Erro ao interagir com o MongoDB:", erro);
-
-  } finally {
-    await DBClient.close();
-    console.log("Conexão com o MongoDB fechada.");
-  }
-}
+import { withMongoDB } from "./database.js"; // Importa a função withMongoDB para conexão com o DB
+import { saveAsJson } from "./fileUtils.js"; // Importa a função para salvar os processos em JSON
+import ExcelJS from "exceljs"; // Importa o módulo para criar e salvar a planilha Excel
 
 // Função para buscar processos no banco de dados
 async function fetchProcesses(db) {
@@ -46,7 +15,7 @@ async function fetchProcesses(db) {
             nP: 1,
             created_at: 1,
             "config_metadata.title": 1,
-            timeline: 1, 
+            timeline: 1,
           },
         }
       )
@@ -67,7 +36,7 @@ async function fetchProcesses(db) {
 
         if (destinationId) {
           lastDestination = destinationId;
-        } 
+        }
       }
 
       return {
@@ -77,31 +46,9 @@ async function fetchProcesses(db) {
         lastDestination,
       };
     });
-
   } catch (error) {
     console.error("Erro ao buscar processos no banco de dados:", error);
     throw new Error("Não foi possível buscar os processos.");
-  }
-}
-
-// Função para salvar processos em JSON
-async function saveAsJson(db) {
-  try {
-    const listOfProcesses = await fetchProcesses(db);
-
-    if (!listOfProcesses || listOfProcesses.length === 0) {
-      console.error("Nenhum processo encontrado para salvar.");
-      return;
-    }
-
-    fs.writeFileSync(
-      "listOfProcesses2.json",
-      JSON.stringify(listOfProcesses, null, 2)
-    );
-
-    console.log("Arquivo listOfProcesses.json salvo com sucesso!");
-  } catch (error) {
-    console.error("Erro ao tentar salvar o arquivo JSON:", error);
   }
 }
 
@@ -131,7 +78,6 @@ async function saveAsExcel(db) {
 
     await wb.xlsx.writeFile("listaProcessos2.xlsx");
     console.log("Arquivo listaProcessos2.xlsx salvo com sucesso!");
-
   } catch (error) {
     console.error("Erro ao tentar salvar o arquivo Excel:", error);
   }
@@ -139,6 +85,9 @@ async function saveAsExcel(db) {
 
 // Executando as funções
 (async () => {
-  await withMongoDB(saveAsJson);
   await withMongoDB(saveAsExcel);
 })();
+
+withMongoDB((db) =>
+  saveAsJson(db, fetchProcesses, "listOfProcesses2.json")
+);
