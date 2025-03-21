@@ -1,40 +1,11 @@
-import { withMongoDB } from "./database.js";
-import { saveAsJson, saveAsExcel } from "./fileUtils.js";
-
-// Função para buscar todos os usuários e setores e armazenar em um dicionário
-async function fetchUsersAndSectors(db) {
-  try {
-    const users = await db
-      .collection("users")
-      .find({}, { projection: { _id: 0, id: 1, name: 1 } })
-      .toArray();
-
-    const sectors = await db
-      .collection("setores")
-      .find({}, { projection: { _id: 0, tag: 1, nome: 1 } })
-      .toArray();
-
-    const userMap = Object.fromEntries(
-      users.map((user) => [user.id, user.name])
-    );
-
-    const sectorMap = Object.fromEntries(
-      sectors.map((sector) => [sector.tag, sector.nome])
-    );
-
-    return { userMap, sectorMap };
-
-  } catch (error) {
-    console.error("Erro ao buscar usuários e setores:", error);
-    throw new Error("Não foi possível buscar usuários e setores.");
-  }
-}
+import { withMongoDB } from "./database.js"; // Importa a função withMongoDB para conexão com o DB
+import { saveAsJson, saveAsExcel } from "./fileUtils.js"; // Importa a função para salvar os processos em JSON
+import { fetchUsersAndSectors } from "./databaseUtils.js"; // Importa função de busca de usuarios e setores
 
 // Função para determinar o último usuário
 function getLastUser(event, userMap) {
   if (event.to?.userId && userMap[event.to.userId]) {
     return userMap[event.to.userId];
-    
   } else if (event.from?.userId && userMap[event.from.userId]) {
     return userMap[event.from.userId];
   }
@@ -45,10 +16,8 @@ function getLastUser(event, userMap) {
 function getLastSector(event, sectorMap) {
   if (event.to?.tag && sectorMap[event.to.tag]) {
     return sectorMap[event.to.tag];
-
   } else if (event.from?.tag && sectorMap[event.from.tag]) {
     return sectorMap[event.from.tag];
-
   } else if (event.to?.userId && sectorMap[event.to.userId]) {
     return sectorMap[event.to.userId]; // Caso `userId` represente um setor
   }
@@ -115,7 +84,6 @@ async function fetchProcesses(db) {
         lastSector: lastSector || "Desconhecido",
       };
     });
-
   } catch (error) {
     console.error("Erro ao buscar processos no banco de dados:", error);
     throw new Error("Não foi possível buscar os processos.");
