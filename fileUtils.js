@@ -29,8 +29,8 @@ export async function saveAsExcel(db, fetchFunction, filename, columns) {
     }
 
     const wb = new ExcelJS.Workbook();
-    const ws = wb.addWorksheet(filename.replace(".xlsx", "")); 
-
+    const ws = wb.addWorksheet(filename.replace(".xlsx", ""));
+    
     ws.columns = columns;
 
     listOfProcesses.forEach((process) => ws.addRow(process));
