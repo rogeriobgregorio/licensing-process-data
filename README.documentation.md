@@ -7,16 +7,17 @@ Este projeto é um teste técnico para extração e manipulação de dados de pr
 ## 📂 Estrutura do Projeto
 
 ```
-📁 projeto-aprova-digital
-│-- 📄 database.js           # Gerencia a conexão com o banco de dados
-│-- 📄 databaseUtils.js      # Funções auxiliares para consultas ao banco de dados
-│-- 📄 etapa1.js             # Implementação da Etapa 1
-│-- 📄 etapa2.js             # Implementação da Etapa 2
-│-- 📄 etapa3.js             # Implementação da Etapa 3
-│-- 📄 etapa4.js             # Implementação da Etapa 4
-│-- 📄 fileUtils.js          # Funções para salvar os dados em JSON e Excel
-│-- 📄 package.json          # Dependências do projeto
-│-- 📄 README.md             # Documentação do projeto
+📁 licensing-process-data
+│-- 📁 licensing-process-visualizer     # Interface em Angular para visualizar os dados
+│-- 📄 database.js                      # Gerencia a conexão com o banco de dados
+│-- 📄 databaseUtils.js                 # Funções auxiliares para consultas ao banco de dados
+│-- 📄 etapa1.js                        # Implementação da Etapa 1
+│-- 📄 etapa2.js                        # Implementação da Etapa 2
+│-- 📄 etapa3.js                        # Implementação da Etapa 3
+│-- 📄 etapa4.js                        # Implementação da Etapa 4
+│-- 📄 fileUtils.js                     # Funções para salvar os dados em JSON e Excel
+│-- 📄 package.json                     # Dependências do projeto
+│-- 📄 README.md                        # Documentação do projeto
 ```
 
 ---
