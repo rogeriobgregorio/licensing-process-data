@@ -1,10 +1,12 @@
-Claro! Aqui está o seu **README.md** atualizado com emojis, seguindo o estilo que você mencionou:
-
----
-
 # 📋 Projeto de Listagem de Processos
 
 Este projeto Angular exibe uma lista de processos extraídos de arquivos JSON. A interface permite ao usuário escolher diferentes arquivos JSON e exibir os dados de maneira interativa e bem estilizada.
+
+---
+
+## 🎥 Demo
+
+![Demo GIF](https://github.com/rogeriobgregorio/licensing-process-data/blob/main/licensing-process-visualizer/demo.gif)
 
 ---
 
