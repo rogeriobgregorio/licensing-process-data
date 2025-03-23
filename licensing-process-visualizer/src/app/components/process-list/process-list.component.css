@@ -1,0 +1,88 @@
+/* Estilos gerais */
+.process {
+  background-color: #ffffff; /* Deixe o fundo mais claro para contraste */
+  border-radius: 10px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+
+.process:hover {
+  background-color: #f1f1f1; /* Um tom suave de cinza para o hover */
+  transform: scale(1.03); /* Suaviza o efeito de escala */
+}
+
+.process p {
+  font-size: 16px;
+  color: #333;
+  margin: 8px 0; /* Aumenta o espaçamento entre os parágrafos */
+}
+
+/* Estilo para o título */
+.process p strong {
+  color: #007bff; /* Cor do título mais viva */
+  font-weight: bold;
+}
+
+/* Estilo para a lista */
+.process-list {
+  max-width: 900px; /* Aumenta a largura para uma área de leitura mais confortável */
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f9f9f9; /* Adiciona fundo claro na lista */
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave ao redor da lista */
+}
+
+/* Estilo para o seletor */
+.select-container {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.select-container label {
+  font-size: 18px; /* Tamanho maior para o rótulo */
+  font-weight: 600;
+  color: #333;
+  display: block;
+  margin-bottom: 10px;
+}
+
+select {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+  color: #555;
+  width: 100%; /* Preenche a largura disponível */
+  max-width: 300px; /* Limita a largura do select */
+  background-color: #f8f9fa;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+select:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.25); /* Efeito de foco suave */
+}
+
+option {
+  padding: 10px; /* Tamanho do texto nas opções */
+}
+
+/* Estilos para o botão de hover */
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3; /* Mudança suave no hover */
+}

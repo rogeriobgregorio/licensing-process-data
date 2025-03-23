@@ -1,0 +1,42 @@
+<div class="select-container">
+  <label for="fileSelect">Escolha um arquivo JSON:</label>
+  <select id="fileSelect" (change)="changeFile($event)">
+    <option value="assets/data/listOfProcesses.json">listOfProcesses.json</option>
+    <option value="assets/data/listOfProcesses2.json">listOfProcesses2.json</option>
+    <option value="assets/data/listOfProcesses3.json">listOfProcesses3.json</option>
+    <option value="assets/data/listOfProcesses4.json">listOfProcesses4.json</option>
+  </select>
+</div>
+
+<div class="process-list">
+  <div *ngFor="let process of processes" class="process">
+    <p><strong>Número do Processo:</strong> {{ process.nP }}</p>
+    <p><strong>Data de Criação:</strong> {{ process.created_at }}</p>
+
+    <!-- Exibindo título, se não houver título, o campo será ocultado -->
+    <p *ngIf="process.config_metadata?.title || process.title">
+      <strong>Título:</strong> 
+      {{ process.config_metadata?.title || process.title }}
+    </p>
+
+    <!-- Exibindo último evento se ele existir -->
+    <p *ngIf="process.lastEvent">
+      <strong>Último Evento:</strong> {{ process.lastEvent }}
+    </p>
+
+    <!-- Exibindo último usuário se ele existir -->
+    <p *ngIf="process.lastUser">
+      <strong>Último Usuário:</strong> {{ process.lastUser }}
+    </p>
+
+    <!-- Exibindo último setor se ele existir -->
+    <p *ngIf="process.lastSector">
+      <strong>Último Setor:</strong> {{ process.lastSector }}
+    </p>
+
+    <!-- Exibindo último destino se ele existir -->
+    <p *ngIf="process.lastDestination">
+      <strong>Último Destino:</strong> {{ process.lastDestination }}
+    </p>
+  </div>
+</div>
