@@ -21,19 +21,33 @@ export async function saveAsJson(db, fetchFunction, fileName) {
 // Função para salvar processos em Excel
 export async function saveAsExcel(db, fetchFunction, filename, columns) {
   try {
-    const listOfProcesses = await fetchFunction(db); 
+    const listOfProcesses = await fetchFunction(db);
 
-    if (!listOfProcesses.length) {
+    if (!listOfProcesses || listOfProcesses.length === 0) {
       console.error("Nenhum processo encontrado para salvar.");
       return;
     }
 
     const wb = new ExcelJS.Workbook();
     const ws = wb.addWorksheet(filename.replace(".xlsx", ""));
-    
+
+    // Define as colunas da planilha
     ws.columns = columns;
 
-    listOfProcesses.forEach((process) => ws.addRow(process));
+    // Mapeia e prepara os dados para a planilha
+    listOfProcesses.forEach((process) => {
+      const rowData = {
+        nP: process.nP,
+        created_at: process.created_at,
+        title: process.config_metadata?.title || process.title || "",
+        lastDestination: process.lastDestination || "",
+        lastUser: process.lastUser || "",
+        lastSector: process.lastSector || "",
+        lastEventAction: process.lastEvent || "",
+      };
+
+      ws.addRow(rowData);
+    });
 
     await wb.xlsx.writeFile(filename);
     console.log(`Arquivo ${filename} salvo com sucesso!`);
